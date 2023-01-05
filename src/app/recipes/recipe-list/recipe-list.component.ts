@@ -12,7 +12,7 @@ export class RecipeListComponent {
     new Recipe(
       'A Test Recipe',
       'This is simply a test',
-      'https://www.eatthis.com/wp-content/uploads/sites/4/2018/12/paleo-coffee-rubbed-steak.jpg'
+      'https://upload.wikimedia.org/wikipedia/commons/1/15/Recipe_logo.jpeg'
     ),
   ];
 }
