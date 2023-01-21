@@ -35,6 +35,10 @@ export class RecipeService {
     // with slice it makes a 'copy' of the array so the recipe stored cant be accessed
   }
 
+  getRecipe(index: number) {
+    return this.recipes[index]; // index will be our id
+  }
+
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredientsToShoppingList(ingredients);
   }
