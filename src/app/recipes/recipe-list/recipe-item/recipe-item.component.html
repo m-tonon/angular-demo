@@ -1,5 +1,5 @@
-<a 
-href="#" 
+<a
+style="cursor: pointer;"
 class="list-group-item clearfix"
 (click)="onSelected()"
 >
@@ -8,10 +8,10 @@ class="list-group-item clearfix"
     <p class="list-group-item-text">{{ recipe.description }}</p>
   </div>
   <span class="pull-right">
-    <img 
+    <img
     [src] = 'recipe.imagePath'
-    alt="{{ recipe.name }}" 
-    class="img-responsive" 
+    alt="{{ recipe.name }}"
+    class="img-responsive"
     style="max-height: 50px" />
   </span>
 </a>
