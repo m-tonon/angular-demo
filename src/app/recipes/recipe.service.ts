@@ -11,7 +11,7 @@ export class RecipeService {
     new Recipe(
       'A Test Recipe',
       'This is simply a test',
-      'https://img.sndimg.com/food/image/upload/f_auto,c_thumb,q_55,w_860,ar_3:2/v1/img/recipes/30/32/45/tKqC3hipQA2MRyTEsneh_oven-bbq-ribs-02757.jpg',
+      'https://img.sndimg.com/food/image/upload/img/recipes/30/32/45/tKqC3hipQA2MRyTEsneh_oven-bbq-ribs-02757.jpg',
       [
         new Ingredient('Meat', 1),
         new Ingredient('Potato', 5)

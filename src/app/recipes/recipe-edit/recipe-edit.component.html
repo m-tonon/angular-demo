@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form [formGroup]="recipeForm">
       <div class="row">
         <div class="col-xs-12">
-          <button class="btn btn-success">Save</button>
+          <button class="btn btn-success" (ngSubmit)="onSubmit()">Save</button>
           <button class="btn btn-danger">Cancel</button>
         </div>
       </div>
@@ -14,6 +14,7 @@
             <input
               type="text"
               id="name"
+              formControlName="name"
               class="form-control">
           </div>
         </div>
@@ -25,6 +26,7 @@
             <input
               type="text"
               id="iamgePath"
+              formControlName="imagePath"
               class="form-control">
           </div>
         </div>
@@ -41,6 +43,7 @@
             <textarea
               type="text"
               id="description"
+              formControlName="description"
               class="form-control"
               rows="6"></textarea>
           </div>
