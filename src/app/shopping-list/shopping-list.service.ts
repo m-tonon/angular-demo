@@ -37,4 +37,9 @@ export class ShoppingListService {
     this.ingredients[index] = newIngredient;
     this.ingredientChanged.next(this.ingredients.slice());
   }
+
+  deleteIngredient(index: number) {
+    this.ingredients.splice(index, 1); // remove the ingredient of the array
+    this.ingredientChanged.next(this.ingredients.slice()); // pass a 'copy' of ingredients
+  }
 }
