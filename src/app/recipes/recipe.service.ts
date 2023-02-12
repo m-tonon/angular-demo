@@ -33,6 +33,11 @@ export class RecipeService {
 
   constructor (private shoppingListService: ShoppingListService) {}
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
   getRecipes() {
     return this.recipes.slice();
     // with slice it makes a 'copy' of the array so the recipe stored cant be accessed
