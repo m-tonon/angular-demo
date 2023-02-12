@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class DataStorageService {
   // this is an end point given by firebase.
 
   fetchRecipes() {
-    this.http
+    return this.http
       .get<Recipe[]>(
         'https://ng-course-recipe-book-94c7b-default-rtdb.firebaseio.com/recipe.json'
       )
@@ -41,15 +41,18 @@ export class DataStorageService {
           // this map function is executed for every elem (recipe) in the array &
           // if ingredients = to recipe ingredients, than = to recipe.ingrediets, no change
           // if not, then set to an empty array.
-          
+
           // first map is a rxjs operator and
           // the second one is called in an array, so its the usual map function
+        }),
+        tap(recipes => {
+          this.recipeService.setRecipes(recipes);
         })
+        // allows execute this function in place w/o altering the data
       )
-      .subscribe((recipes) => {
-        this.recipeService.setRecipes(recipes);
-        // Angular dont know which type recipes is, so we need to inform that into the get function
-        // type <Recipe[]> is imported from recipe model
-      });
+      // .subscribe((recipes) => {
+      // });
+      // Angular dont know which type recipes is, so we need to inform that into the get function
+      // type <Recipe[]> is imported from recipe model
   }
 }
