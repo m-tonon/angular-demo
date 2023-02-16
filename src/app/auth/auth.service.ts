@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   idToken: string;
@@ -21,7 +22,9 @@ export class AuthService {
   // we next a new user whenever we have one that's logged in or also logged out
   user = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router) {}
 
   signup(email: string, password: string) {
     return this.http
@@ -64,6 +67,11 @@ export class AuthService {
           +resData.expiresIn
         );
       }));
+  }
+
+  logout() {
+    this.user.next(null);
+    this.router.navigate(['/auth']);
   }
 
   private handleAuthentication(
