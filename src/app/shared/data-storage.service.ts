@@ -30,16 +30,10 @@ export class DataStorageService {
   // this is an end point given by firebase.
 
   fetchRecipes() {
-    return this.authService.user.pipe(take(1), exhaustMap(user => {
       return this.http
       .get<Recipe[]>(
         'https://ng-course-recipe-book-94c7b-default-rtdb.firebaseio.com/recipe.json',
-        {
-          params: new HttpParams().set('auth', user.token)
-        }
-      )
-    }),
-       map((recipes) => {
+      ).pipe(map((recipes) => {
           return recipes.map((recipe) => {
             return {
               ...recipe,
@@ -55,8 +49,6 @@ export class DataStorageService {
         }),
         tap(recipes => {
           this.recipeService.setRecipes(recipes);
-        })
-        // allows execute this function in place w/o altering the data)
-    )
+        }))
+    }
   }
-}
