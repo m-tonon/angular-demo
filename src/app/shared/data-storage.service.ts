@@ -1,14 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
-import { map, tap } from 'rxjs/operators';
+import { exhaustMap, map, take, tap } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataStorageService {
-  constructor(private http: HttpClient, private recipeService: RecipeService) {}
+  constructor(
+    private http: HttpClient,
+    private recipeService: RecipeService,
+    private authService: AuthService) {}
 
   storeRecipes() {
     // get my recipe list from recipe service
@@ -26,12 +30,16 @@ export class DataStorageService {
   // this is an end point given by firebase.
 
   fetchRecipes() {
-    return this.http
+    return this.authService.user.pipe(take(1), exhaustMap(user => {
+      return this.http
       .get<Recipe[]>(
-        'https://ng-course-recipe-book-94c7b-default-rtdb.firebaseio.com/recipe.json'
+        'https://ng-course-recipe-book-94c7b-default-rtdb.firebaseio.com/recipe.json',
+        {
+          params: new HttpParams().set('auth', user.token)
+        }
       )
-      .pipe(
-        map((recipes) => {
+    }),
+       map((recipes) => {
           return recipes.map((recipe) => {
             return {
               ...recipe,
@@ -48,11 +56,7 @@ export class DataStorageService {
         tap(recipes => {
           this.recipeService.setRecipes(recipes);
         })
-        // allows execute this function in place w/o altering the data
-      )
-      // .subscribe((recipes) => {
-      // });
-      // Angular dont know which type recipes is, so we need to inform that into the get function
-      // type <Recipe[]> is imported from recipe model
+        // allows execute this function in place w/o altering the data)
+    )
   }
 }
