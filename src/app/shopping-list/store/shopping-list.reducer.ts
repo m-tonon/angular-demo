@@ -19,5 +19,7 @@ export function shoppingListReducer (
         // spread the content of the state into a new JS Object (a copy).
         ingredients: [...state.ingredients, action.payload]
       };
+    default:
+      return state;
   }
 }
