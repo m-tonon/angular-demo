@@ -10,7 +10,7 @@ const initialState = {
 
 export function shoppingListReducer (
   state = initialState,
-  action: ShoppingListActions.AddIngredient
+  action: ShoppingListActions.ShoppingListActions
 ) {
   switch (action.type) {
     case ShoppingListActions.ADD_INGREDIENT:
@@ -18,6 +18,11 @@ export function shoppingListReducer (
         ...state,
         // spread the content of the state into a new JS Object (a copy).
         ingredients: [...state.ingredients, action.payload]
+      };
+    case ShoppingListActions.ADD_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: [...state.ingredients, ...action.payload]
       };
     default:
       return state;

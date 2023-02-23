@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { Subject } from "rxjs";
+
 import { Ingredient } from "../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Recipe } from "./recipe.model";
+import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +37,10 @@ export class RecipeService {
   // --> with recipes stored into firebase we dont need it anymore
   private recipes: Recipe[] = [];
 
-  constructor (private shoppingListService: ShoppingListService) {}
+  constructor (
+    private shoppingListService: ShoppingListService,
+    private store: Store<{ shoppingList: { ingredients: Ingredient[] }}>
+    ) {}
 
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes;
@@ -51,7 +57,8 @@ export class RecipeService {
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.shoppingListService.addIngredientsToShoppingList(ingredients);
+    // this.shoppingListService.addIngredientsToShoppingList(ingredients);
+    this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
   }
 
   addRecipe(recipe: Recipe) {
