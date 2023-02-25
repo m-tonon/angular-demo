@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredient.model";
 import { Recipe } from "./recipe.model";
 import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
-import * as fromApp from '../store/app.reducer'
+import * as fromApp from '../store/app.reducer';
 
 @Injectable({
   providedIn: 'root'
