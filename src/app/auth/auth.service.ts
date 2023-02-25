@@ -25,7 +25,7 @@ export interface AuthResponseData {
 export class AuthService {
   // user = new Subject<User>();
   // we next a new user whenever we have one that's logged in or also logged out
-  user = new BehaviorSubject<User>(null);
+  // user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
   constructor(
