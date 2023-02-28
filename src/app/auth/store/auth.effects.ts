@@ -63,6 +63,14 @@ export class AuthEffects {
     )
   );
 
+  authSucess = createEffect(
+    () => this.actions$.pipe(
+        ofType(AuthActions.LOGIN),
+        tap(() => this.router.navigate(['/']))
+      ),
+      { dispatch: false }
+  );
+
   constructor (
     private actions$: Actions,
     private http: HttpClient,
