@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { of } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
+import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { environment } from '../../../../environments/environment';
 
 import * as AuthActions from './auth.actions';
@@ -41,7 +42,21 @@ export class AuthEffects {
               });
           }),
           catchError(errorRes => {
-            return of();
+            let errorMessage = 'An unkown error occured!';
+            if (!errorRes.error || !errorRes.error.error) {
+              return of (new AuthActions.LoginFail(errorMessage));
+            }
+            switch (errorRes.error.error.message) {
+              case 'EMAIL_EXISTS':
+                errorMessage = 'This email exists already';
+                break;
+              case 'EMAIL_NOT_FOUND':
+                errorMessage = 'This email does not exist';
+                break;
+              case 'INVALID_PASSWORD':
+                errorMessage = 'This password is not correct';
+            }
+            return of(new AuthActions.LoginFail(errorMessage));
           })
         );
      })
@@ -50,6 +65,7 @@ export class AuthEffects {
 
   constructor (
     private actions$: Actions,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
     ) {}
 }
