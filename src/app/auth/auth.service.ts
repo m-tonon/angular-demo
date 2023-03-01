@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { User } from './user.model';
 import * as fromApp from '../auth/store/auth.reducer';
 import * as AuthActions from '../auth/store/auth.actions';
 
